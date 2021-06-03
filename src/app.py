@@ -353,7 +353,7 @@ def checkModelVersion():
     versionLocalMasReciente, versionLocalMasRecienteTxt = getMostRecentVersion(
         ficheros)
 
-    g = Github("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")
+    g = Github("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")
     repo = g.get_repo("fyi0000/HolaMundoTarea")
     modelosJson = repo.get_contents("modelos.json")
     dictModelos = json.loads(modelosJson.decoded_content)
