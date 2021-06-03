@@ -356,7 +356,9 @@ def checkModelVersion():
     #g = Github("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")
     #repo = g.get_repo("fyi0000/HolaMundoTarea")
     ficheroJson = wget.download('https://raw.githubusercontent.com/fyi0000/HolaMundoTarea/master/modelos.json')
-    dictModelos = json.loads(ficheroJson.decoded_content)
+    with open("file.json", "r") as fich:
+        dictModelos = json.loads(fich)
+            
     versiones = [int(v['version'].replace('.','')) for v in dictModelos['modelos']]
     versionesTxt = [v['version'] for v in dictModelos['modelos']]
 
