@@ -353,10 +353,10 @@ def checkModelVersion():
     versionLocalMasReciente, versionLocalMasRecienteTxt = getMostRecentVersion(
         ficheros)
 
-    g = Github("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")
-    repo = g.get_repo("fyi0000/HolaMundoTarea")
-    modelosJson = repo.get_contents("modelos.json")
-    dictModelos = json.loads(modelosJson.decoded_content)
+    #g = Github("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")
+    #repo = g.get_repo("fyi0000/HolaMundoTarea")
+    ficheroJson = wget.download('https://raw.githubusercontent.com/fyi0000/HolaMundoTarea/master/modelos.json')
+    dictModelos = json.loads(ficheroJson.decoded_content)
     versiones = [int(v['version'].replace('.','')) for v in dictModelos['modelos']]
     versionesTxt = [v['version'] for v in dictModelos['modelos']]
 
@@ -367,7 +367,6 @@ def checkModelVersion():
     print('La ultima version es la '+lastVersionTxt+' con un enlace: ', url)
     print('Version entera', lastVersion)
 
-
     if versionLocalMasReciente >= lastVersion:
         nombreFichero = 'modelo-'+lastVersionTxt+'.pth'
         session['modelo'] = nombreFichero
@@ -375,7 +374,8 @@ def checkModelVersion():
     
     session['urlUpdate'] = url
     session['versionUpdate'] = lastVersionTxt
-
+    nombreFichero = 'modelo-'+versionLocalMasRecienteTxt+'.pth'
+    session['modelo'] = nombreFichero
     return jsonify(status='Outdated', recentVersion=lastVersionTxt, oldVersion = versionLocalMasRecienteTxt)
 
 # Se actualiza a la ultima version el modelo
@@ -400,6 +400,7 @@ def updateModel():
 # Metodo auxiliar que busca en una lista el valor numerico mas alto de version y devuelve el mismo y en cadena
 def getMostRecentVersion(list):
     masReciente = 0
+    masRecienteTxt = ''
     for e in list:
         version = re.findall("[\\b\d\\b]", e)
         versionNumber = int(''.join(version))
