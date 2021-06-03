@@ -190,6 +190,7 @@ def deteccion():
     if os.path.isfile('registro.csv'):
         print('El fichero existe')
         df = pd.read_csv('registro.csv', index_col=0).copy()
+        print(df.columns)
         if fechaRegistro in df.Fecha.unique():
             for i in range(len(df.Fecha)):
                 if df.Fecha[i] == fechaRegistro:
@@ -353,15 +354,12 @@ def checkModelVersion():
     versionLocalMasReciente, versionLocalMasRecienteTxt = getMostRecentVersion(
         ficheros)
 
-    #g = Github("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")
-    #repo = g.get_repo("fyi0000/HolaMundoTarea")
     ficheroJson = wget.download('https://raw.githubusercontent.com/fyi0000/HolaMundoTarea/master/modelos.json')
     with open("modelos.json", "r") as fich:
         dictModelos = json.loads(fich)
             
     versiones = [int(v['version'].replace('.','')) for v in dictModelos['modelos']]
     versionesTxt = [v['version'] for v in dictModelos['modelos']]
-
     
     lastVersion = max(versiones)
     lastVersionTxt = versionesTxt[versiones.index(lastVersion)]
