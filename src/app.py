@@ -114,6 +114,7 @@ def deteccion():
     masks = dt.getOutputMask(salida)
 
     if masks == 'Sin Defectos':
+	print('Dalleeee')
         fig = px.imshow(im)
         fig.update_traces(hoverinfo='skip')
         nombreGraph = "./static/uploads/graph_" + \
