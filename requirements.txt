@@ -1,7 +1,6 @@
 pandas
 numpy
 flask
-requests
 plotly
 scikit-image
 PyGithub
