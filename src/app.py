@@ -188,9 +188,7 @@ def deteccion():
     numErrores = Counter(listTipos)
 
     if os.path.isfile('registro.csv'):
-        print('El fichero existe')
         df = pd.read_csv('registro.csv', index_col=0).copy()
-        print(df.columns)
         if fechaRegistro in df.Fecha.unique():
             for i in range(len(df.Fecha)):
                 if df.Fecha[i] == fechaRegistro:
@@ -205,13 +203,11 @@ def deteccion():
             data = [{'N':1,'Fecha':fechaRegistro, 'Small':numErrores['Small'], 'Medium':numErrores['Medium'], 'Big':numErrores['Big']}]
             df = df.append(data, ignore_index=True,sort=False)
             df.to_csv(r'registro.csv')
-            print('No habia fecha, anadida fila')
 
     else:
         data = [{'N':1,'Fecha':fechaRegistro, 'Small':numErrores['Small'], 'Medium':numErrores['Medium'], 'Big':numErrores['Big']}]
         df = pd.DataFrame(data)
         df.to_csv(r'registro.csv')
-        print('No exite el fichero, creado')
 
     # Generacion del grafico de lineas Plotly
     dfc = pd.read_csv('registro.csv')
@@ -354,9 +350,11 @@ def checkModelVersion():
     versionLocalMasReciente, versionLocalMasRecienteTxt = getMostRecentVersion(
         ficheros)
 
+    if os.path.exists("modelos.json"):
+        os.remove("modelos.json") # if exist, remove it directly
     ficheroJson = wget.download('https://raw.githubusercontent.com/fyi0000/HolaMundoTarea/master/modelos.json')
     with open("modelos.json", "r") as fich:
-        dictModelos = json.loads(fich)
+        dictModelos = json.load(fich)
             
     versiones = [int(v['version'].replace('.','')) for v in dictModelos['modelos']]
     versionesTxt = [v['version'] for v in dictModelos['modelos']]
@@ -364,8 +362,6 @@ def checkModelVersion():
     lastVersion = max(versiones)
     lastVersionTxt = versionesTxt[versiones.index(lastVersion)]
     url = str(dictModelos['modelos'][versiones.index(lastVersion)]['url'])
-    print('La ultima version es la '+lastVersionTxt+' con un enlace: ', url)
-    print('Version entera', lastVersion)
 
     if versionLocalMasReciente >= lastVersion:
         nombreFichero = 'modelo-'+lastVersionTxt+'.pth'
