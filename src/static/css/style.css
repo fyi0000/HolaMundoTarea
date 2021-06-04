@@ -80,7 +80,6 @@
 
 #botonActualizar{
   display: none;
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -105,8 +104,9 @@
 .gridUpdater{
   padding: 10px;
   display: grid;
-  grid-template-columns: auto 1fr auto; 
+  grid-template-columns: auto auto auto; 
   text-align: center; 
+  place-items: center;
   max-width: 500px;
   margin: auto;
   position: absolute;
@@ -116,8 +116,8 @@
 
 .gridUpdater > div{
   margin-left: 5px;
-  display: block;
   text-align: left;
+  border: 5px black;  
 }
 
 
