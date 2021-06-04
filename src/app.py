@@ -113,7 +113,7 @@ def deteccion():
     # Extraccion de mascaras
     masks = dt.getOutputMask(salida)
 
-    if masks == 'Sin Defectos':
+    if masks == 'Sin Defectos' or masks.size == 0:
 	print('Dalleeee')
         fig = px.imshow(im)
         fig.update_traces(hoverinfo='skip')
